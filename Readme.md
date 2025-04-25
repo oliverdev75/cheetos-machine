@@ -1,5 +1,8 @@
 # Proyecto Maquina Expendedora (Flask + Vue)
 
+# Miro (Organizacion dle proyecto)
+https://miro.com/welcome/dlBnaGlPdWdTdnZTNDNiMTZQV0VvZ0dvVjUzU0JzMERmTG5TZkNTTVVkWXJ2NzZHR252ZGgvb2JEUUtpWGhRUG5adURaTU94NmwyM1owdGRoWm1kRU5tc3dDcy8ydCsrRTZVdmJaK3EzV3l2LzJzV1VuZnJyeWkyTVNGYmNZMlJBS2NFMDFkcUNFSnM0d3FEN050ekl3PT0hdjE=?share_link_id=795515166597
+
 # Estructura de carpetas:
 ```
 Sintesis_Proyecto-MaquinaExpendedora/
