@@ -23,6 +23,16 @@ https://www.python.org/downloads/
 
 Marcar la opcion de "**Añadir python a las variables de entorno**".
 
+### Instalar VENV
+```bash
+python.exe -m venv .venv
+```
+
+### Instalar Requeriments.txt
+```bash
+pip install -r .\requirements.txt
+```
+
 ## Instalacion de NodeJS
 https://nodejs.org/en/download
 
@@ -30,7 +40,7 @@ https://nodejs.org/en/download
 ## Flask
 ```bash
 cd flask-api
-python app.py
+flask run
 ```
 ## Vue
 *En otra terminal.*

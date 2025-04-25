@@ -10,6 +10,10 @@ app.config['SECRET_KEY'] = secrets.token_hex()
 
 user = { 'email': 'test@demo.com', 'name': 'Test user', 'alias': 'testuser' }
 
+@app.route('/')
+def index():
+    return "<h1>Hello Flask!</h1>"
+
 @app.route('/api/ping')
 def ping():
     auth = request.headers.get('Authorization', '').split()
