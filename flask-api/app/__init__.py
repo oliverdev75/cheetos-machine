@@ -1,7 +1,7 @@
 from flask import Flask, request, jsonify
 import jwt
 import secrets
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from dotenv import load_dotenv
 load_dotenv()
 
@@ -16,8 +16,11 @@ def index():
 
 @app.route('/api/ping')
 def ping():
-    auth = request.headers.get('Authorization', '').split()
+    auth_header = request.headers.get('Authorization', '')
+    print(f"Authorization header: {auth_header!r}")
+    auth = auth_header.split()
 
+    print(f"auth list: {auth}")
     if len(auth) != 2:
         return jsonify({
             'success': False,
@@ -38,12 +41,14 @@ def ping():
     
 @app.route('/login', methods=['POST'])
 def login():
+    print(datetime.now())
+    print(datetime.utcnow())
     data = request.get_json()
     if data['email'] == user['email']:
         token = jwt.encode({
             'sub': user['email'],
-            'iat': datetime.now(),
-            'exp': datetime.now() + timedelta(minutes=30)
+            'iat': datetime.now(timezone.utc),  # Especificar la zona horaria, timezone hay que importarlo
+            'exp': datetime.now(timezone.utc) + timedelta(minutes=30)
             },
             app.secret_key,
         )

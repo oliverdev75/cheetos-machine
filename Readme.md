@@ -28,6 +28,7 @@ Marcar la opcion de "**Añadir python a las variables de entorno**".
 
 ### Instalar VENV
 ```bash
+cd flask-api
 python.exe -m venv .venv
 ```
 
@@ -40,6 +41,16 @@ pip install -r .\requirements.txt
 https://nodejs.org/en/download
 
 # Iniciar Proyecto
+```bash
+.\flask-api\.venv\Scripts\activate
+cd flask-api
+flask run
+```
+## Iniciar Venv
+```bash
+.\.venv\Scripts\activate
+```
+
 ## Flask
 ```bash
 cd flask-api
