@@ -3,7 +3,6 @@
 </script>
 
 <template>
-<p>Dashboard</p>
     <div class="mainDashboardGrid">
         <div class="grid-item" style=" grid-area: 1 / 2 / 2 / 3;"> </div>
         <div class="grid-item" style=" grid-area: 2 / 2 / 6 / 3;"> </div>
@@ -22,13 +21,16 @@
 
     gap: 3rem;
 
-    width: 100vw;
+    width: 85%;
+    height: 85vh;
+    margin: auto;
 }
 
 .grid-item
 {
-    width: 255px;
-    height: 64px;
+    width: 100%;
+    height: 100%;
+    border-radius: 1rem;
     background-color: aqua;
 }
 </style>
