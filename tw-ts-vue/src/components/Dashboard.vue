@@ -10,8 +10,6 @@
         <div class="grid-item" style=" grid-area: 1 / 1 / 4 / 2;"> </div>
         <div class="grid-item" style=" grid-area: 4 / 1 / 6 / 2;"> </div>
     </div>
-
-
 </template>
 
 <style scoped>
@@ -23,6 +21,8 @@
     grid-row-gap: 0px;
 
     gap: 3rem;
+
+    width: 100vw;
 }
 
 .grid-item
