@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import Header from "./Layouts/Header.vue"
-</script> 
+</script>
 
 <template>
   <Header></Header>

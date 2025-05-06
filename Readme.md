@@ -20,6 +20,14 @@ Sintesis_Proyecto-MaquinaExpendedora/
 ├── README.md
 ```
 
+# Estructura BBDD
+```
+Tablas:
+ - Usuarios
+ - Productos
+ - Pedidos
+```
+
 # Instalacion:
 ## Instalacion de Python
 https://www.python.org/downloads/
