@@ -4,5 +4,5 @@ import Header from "./Layouts/Header.vue"
 
 <template>
   <Header></Header>
-  <router-view />
+  <RouterView />
 </template>
