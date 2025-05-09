@@ -60,7 +60,7 @@ flask run
 *En otra terminal.*
 ```bash
 cd tw-ts-vue
-npm run serve
+npm run dev
 ```
 
 # Deployment

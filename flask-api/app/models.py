@@ -1,0 +1,85 @@
+from sqlalchemy import Integer, String, Double, DateTime, ForeignKey
+from datetime import datetime
+from dataclasses import dataclass
+from app import db
+
+@dataclass
+class User(db.Model):
+    __tablename__ = 'users'
+
+    id = db.Column(Integer(), primary_key=True)
+    name = db.Column(String(255), nullable=False)
+    email = db.Column(String(255), unique=True)
+    password = db.Column(String(255), nullable=False)
+    created_at = db.Column(DateTime(), default=datetime.now(), nullable=False)
+    updated_at = db.Column(DateTime(), default=None)
+    roles = db.relationship("Role", secondary="user_role", backref="users")
+    orders = db.relationship("Order", backref="user")
+
+    def to_dict(self):
+        data = { 'id': self.id, 'created_at': self.created_at, 'updated_at': self.updated_at }
+        return data
+
+    def __repr__(self):
+        return f"<User >"
+
+
+@dataclass
+class Product(db.Model):
+    __tablename__ = 'products'
+
+    id = db.Column(Integer(), primary_key=True)
+    name = db.Column(String(255), nullable=False)
+    price = db.Column(Double(2), nullable=False)
+    image = db.Column(String(255), nullable=False)
+    created_at = db.Column(DateTime(), default=datetime.now(), nullable=False)
+    updated_at = db.Column(DateTime(), default=None)
+    orders = db.relationship("Order", secondary="product_order", backref="products")
+
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'name': self.name,
+            'created_at': self.created_at,
+            'updated_at': self.updated_at
+        }
+
+    def __repr__(self):
+        return f"<Product >"
+
+
+@dataclass
+class Order(db.Model):
+    __tablename__ = 'orders'
+
+    id = db.Column(Integer(), primary_key=True)
+    user_id = db.Column(Integer(), ForeignKey('users.id'), nullable=False)
+    price = db.Column(Double(2), nullable=False)
+    created_at = db.Column(DateTime(), default=datetime.now(), nullable=False)
+    updated_at = db.Column(DateTime(), default=None)
+
+    def to_dict(self):
+        data = { 'id': self.id, 'created_at': self.created_at, 'updated_at': self.updated_at }
+        return data
+
+    def __repr__(self):
+        return f"<Order >"
+
+
+@dataclass
+class Role(db.Model):
+    __tablename__ = 'roles'
+
+    id = db.Column(Integer(), primary_key=True)
+    name = db.Column(String(255), unique=True)
+    created_at = db.Column(DateTime(), default=datetime.now(), nullable=False)
+    updated_at = db.Column(DateTime(), default=None)
+
+    def to_dict(self):
+        data = { 'id': self.id, 'name': self.name, 'created_at': self.created_at, 'updated_at': self.updated_at }
+        return data
+
+    def __repr__(self):
+        return f"<Role >"
+
+
