@@ -1,5 +1,13 @@
 <script setup lang="ts">
 
+import {onMounted} from "vue";
+import useApi from "../composables/api.ts";
+
+onMounted(async () => {
+    const api = useApi();
+    
+})
+
 </script>
 
 <template>
@@ -26,8 +34,7 @@
     margin: auto;
 }
 
-.grid-item
-{
+.grid-item {
     width: 100%;
     height: 100%;
     border-radius: 1rem;
