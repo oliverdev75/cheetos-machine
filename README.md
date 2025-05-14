@@ -20,6 +20,20 @@ Sintesis_Proyecto-MaquinaExpendedora/
 ├── README.md
 ```
 
+# Estructura BBDD
+## Tablas:
+ - Usuarios
+ - Productos
+ - Pedidos
+ - Pedido_Producto
+
+## Relaciones:
+ - Usuarios pueden realizar - 0,N -> Pedidos
+ - Productos pertenece a - 0,1 -> Usuarios
+ - Pedido puede contener - 0,1 -> Productos
+ - Producto puede estar en - 0,N -> Pedidos
+
+
 # Instalacion:
 ## Instalacion de Python
 https://www.python.org/downloads/
