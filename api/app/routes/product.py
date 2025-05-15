@@ -1,9 +1,9 @@
 from flask import jsonify
-from app import app
-from app.models import Product
+from app import api
+from app.database.models import Product
 from app.constants import API_PREFIX
 
-@app.route(f"{API_PREFIX}/buy/<id>")
+@api.route("/buy/<id>")
 def buy_product(id = None):
     if not id:
         return jsonify("id param is required"), 400
