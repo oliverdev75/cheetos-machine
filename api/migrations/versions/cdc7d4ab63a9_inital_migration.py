@@ -1,8 +1,8 @@
-"""Inital db migrations
+"""Inital migration
 
-Revision ID: 7563d5a117e3
+Revision ID: cdc7d4ab63a9
 Revises: 
-Create Date: 2025-05-09 17:04:02.730001
+Create Date: 2025-05-13 13:33:29.329609
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '7563d5a117e3'
+revision = 'cdc7d4ab63a9'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -29,7 +29,7 @@ def upgrade():
     )
     op.create_table('roles',
     sa.Column('id', sa.Integer(), nullable=False),
-    sa.Column('name', sa.String(length=255), nullable=False),
+    sa.Column('name', sa.String(length=255), nullable=True),
     sa.Column('created_at', sa.DateTime(), nullable=False),
     sa.Column('updated_at', sa.DateTime(), nullable=True),
     sa.PrimaryKeyConstraint('id'),
@@ -38,7 +38,7 @@ def upgrade():
     op.create_table('users',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('name', sa.String(length=255), nullable=False),
-    sa.Column('email', sa.String(length=255), nullable=False),
+    sa.Column('email', sa.String(length=255), nullable=True),
     sa.Column('password', sa.String(length=255), nullable=False),
     sa.Column('created_at', sa.DateTime(), nullable=False),
     sa.Column('updated_at', sa.DateTime(), nullable=True),
@@ -63,6 +63,4 @@ def downgrade():
     op.drop_table('users')
     op.drop_table('roles')
     op.drop_table('products')
-    op.drop_table('user_role')
-    op.drop_table('order_product')
     # ### end Alembic commands ###
