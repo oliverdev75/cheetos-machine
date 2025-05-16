@@ -3,6 +3,20 @@ from datetime import datetime
 from dataclasses import dataclass
 from app import db
 
+#Tablas intermedias
+user_role = db.Table(
+    'user_role',
+    db.Column('user_id', db.Integer, db.ForeignKey('users.id'), primary_key=True),
+    db.Column('role_id', db.Integer, db.ForeignKey('roles.id'), primary_key=True)
+)
+
+product_order = db.Table(
+    'product_order',
+    db.Column('product_id', db.Integer, db.ForeignKey('products.id'), primary_key=True),
+    db.Column('order_id', db.Integer, db.ForeignKey('orders.id'), primary_key=True)
+)
+
+#Tablas
 @dataclass
 class User(db.Model):
     __tablename__ = 'users'
