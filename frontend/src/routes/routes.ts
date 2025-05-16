@@ -13,7 +13,7 @@ export default [
         path: '/about',
         component: About,
     },
-    {
+        {
         name: 'dashboard',
         path: '/dashboard',
         component: Dashboard,

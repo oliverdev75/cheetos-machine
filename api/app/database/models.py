@@ -1,4 +1,4 @@
-from sqlalchemy import Integer, String, Double, DateTime, ForeignKey
+from sqlalchemy import Integer, String, Float, DateTime, ForeignKey
 from datetime import datetime
 from dataclasses import dataclass
 from app import db
@@ -17,7 +17,11 @@ class User(db.Model):
     orders = db.relationship("Order", backref="user")
 
     def to_dict(self):
-        data = { 'id': self.id, 'created_at': self.created_at, 'updated_at': self.updated_at }
+        data = {
+            'id': self.id,
+            'created_at': self.created_at,
+            'updated_at': self.updated_at
+        }
         return data
 
     def __repr__(self):
@@ -30,7 +34,7 @@ class Product(db.Model):
 
     id = db.Column(Integer(), primary_key=True)
     name = db.Column(String(255), nullable=False)
-    price = db.Column(Double(2), nullable=False)
+    price = db.Column(Float(2), nullable=False)
     image = db.Column(String(255), nullable=False)
     created_at = db.Column(DateTime(), default=datetime.now(), nullable=False)
     updated_at = db.Column(DateTime(), default=None)
@@ -54,7 +58,7 @@ class Order(db.Model):
 
     id = db.Column(Integer(), primary_key=True)
     user_id = db.Column(Integer(), ForeignKey('users.id'), nullable=False)
-    price = db.Column(Double(2), nullable=False)
+    price = db.Column(Float(2), nullable=False)
     created_at = db.Column(DateTime(), default=datetime.now(), nullable=False)
     updated_at = db.Column(DateTime(), default=None)
 
