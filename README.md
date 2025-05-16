@@ -10,7 +10,7 @@ Sintesis_Proyecto-MaquinaExpendedora/
 │   ├── app.py
 │   └── api/
 │       └── rutas.py
-├── tw-ts-vue/          (frontend)
+├── frontend/          (frontend)
 │   ├── public/
 │   ├── src/
 │   │   ├── App.vue
@@ -74,7 +74,7 @@ flask run
 ## Vue
 *En otra terminal.*
 ```bash
-cd tw-ts-vue
+cd frontend
 npm run dev
 ```
 
