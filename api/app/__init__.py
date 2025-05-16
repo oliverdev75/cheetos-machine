@@ -11,7 +11,9 @@ from flask_cors import CORS
 load_dotenv()
 
 app = Flask(__name__)
-CORS(app, origins="http://localhost:5173")    # Solo permite solicitudes del servidor VUE-Vite, Flask por defecto no permite solicitudes de otro host/conexion (Es mas seguro aunque para evitar errores esta comentado)
+CORS(app, origins="http://localhost:5173")    
+# Solo permite solicitudes del servidor VUE-Vite.
+# Flask por defecto no permite solicitudes de otro host/conexion
 
 connection_string = f"{os.getenv('DB_CONNECTION')}://{os.getenv('DB_USER')}:{os.getenv('DB_PASSWORD')}@{os.getenv('DB_HOST')}:{os.getenv('DB_PORT')}/{os.getenv('DB_NAME')}"
 app.config.update(
