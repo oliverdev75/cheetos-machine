@@ -10,8 +10,8 @@ onMounted(async () => {
 
 const login = async () => {
   try {
-    const response = await api.post('api/login', {
-      email: 'test@demo.com'
+    const response = await api.post('/login', {
+      "email" : 'test@demo.com'
     });
     console.log('Login exitoso:', response.data);
   } catch (error) {

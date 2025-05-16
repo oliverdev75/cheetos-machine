@@ -11,7 +11,7 @@ from flask_cors import CORS
 load_dotenv()
 
 app = Flask(__name__)
-CORS(app, origins="http://localhost:5173")    
+CORS(app, origins="http://localhost:5173")
 # Solo permite solicitudes del servidor VUE-Vite.
 # Flask por defecto no permite solicitudes de otro host/conexion
 
