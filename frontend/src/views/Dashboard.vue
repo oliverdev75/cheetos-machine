@@ -1,57 +1,72 @@
 <script setup lang="ts">
-
+import { onMounted } from 'vue';
 import useApi from '../composables/api';
+import useLogin from '../composables/useLogin';
 
 const api = useApi();
 
-const login = async () => {
+onMounted(async () => {
+
+})
+
+  const tryLogin = async () => {
+    const tryToLogin = useLogin(); 
+    const response = await tryToLogin("test@demo.com");
+    console.log(response);
+  };
+
+  /* TEST (se puede borrar si es necesario) */
+const ping = async () => {
   try {
-    const response = await api.post('/login', {
-      email: 'test@demo.com'
-    });
-    console.log('Login exitoso:', response.data);
+    const response = await api.get('/api/ping');
+    console.log(response.data);
   } catch (error) {
-    console.error('Error al iniciar sesión:', error);
+    console.error('Error ping:', error);
   }
-};
+}
 </script>
 
 <template>
-    <div class="background">
-        <div class="mainDashboardGrid">
-            <div class="grid-item" style=" grid-area: 1 / 2 / 2 / 3; background: #9EECA0;"> 
-                <button @click="login">
-                    Login!
-                </button>
-            </div>
-            <div class="grid-item" style=" grid-area: 2 / 2 / 6 / 3; background: #9D8DE0;"> </div>
-            <div class="grid-item" style=" grid-area: 1 / 1 / 4 / 2; background: #9D8DE0;"> </div>
-            <div class="grid-item" style=" grid-area: 4 / 1 / 6 / 2; background: #9EECA0;"> </div>
-        </div>
+  <div class="background">
+    <div class="mainDashboardGrid">
+
+      <div class="grid-item" style=" grid-area: 1 / 2 / 2 / 3; background: #9EECA0;">
+        <button @click="tryLogin">
+          Login!
+        </button>
+        <button @click="ping">
+          Ping!
+        </button>
+      </div>
+
+      <div class="grid-item" style=" grid-area: 2 / 2 / 6 / 3; background: #9D8DE0;"> </div>
+      <div class="grid-item" style=" grid-area: 1 / 1 / 4 / 2; background: #9D8DE0;"> </div>
+      <div class="grid-item" style=" grid-area: 4 / 1 / 6 / 2; background: #9EECA0;"> </div>
     </div>
+  </div>
 </template>
 
 <style scoped>
 .mainDashboardGrid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: repeat(5, 1fr);
-    grid-column-gap: 0px;
-    grid-row-gap: 0px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(5, 1fr);
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
 
-    gap: 3rem;
+  gap: 3rem;
 
-    margin: auto;
-    margin-top: 16px;
-    width: 90%;
-    height: 90vh;
+  margin: auto;
+  margin-top: 16px;
+  width: 90%;
+  height: 90vh;
 }
 
 .grid-item {
-    width: 100%;
-    height: 100%;
+  width: 100%;
+  height: 100%;
 
-    border-radius: 1rem;
-    box-shadow: 0 0 8px rgb(240, 240, 240);
+  border-radius: 1rem;
+  box-shadow: 0 0 8px rgb(240, 240, 240);
 }
 </style>
