@@ -1,6 +1,5 @@
 import Home from '../views/Home.vue'
 import About from '../views/About.vue'
-import Dashboard from '../views/Dashboard.vue'
 
 export default [
     {
@@ -12,10 +11,5 @@ export default [
         name: 'about',
         path: '/about',
         component: About,
-    },
-    {
-        name: 'dashboard',
-        path: '/dashboard',
-        component: Dashboard,
     }
 ]
