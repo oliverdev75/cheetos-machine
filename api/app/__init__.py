@@ -79,3 +79,9 @@ def login():
         'success': False,
         'message': 'Bad email'
     }), 401
+    
+@app.route('/order/create', methods=["GET"])
+def createOrder():
+    return jsonify({
+            'success': True
+        }), 200
