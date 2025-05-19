@@ -1,8 +1,9 @@
 import axios from "axios"
+import { API_URL } from "../constants/api"
 
 export default function useApi() {
     const client = axios.create({
-        baseURL: import.meta.env.VITE_API_URL,
+        baseURL: API_URL,
         headers: {
             "Content-Type": "application/json",
         },

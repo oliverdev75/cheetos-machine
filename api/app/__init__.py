@@ -8,13 +8,16 @@ from .constants import API_PREFIX
 from .database.DatabaseConfig import DatabaseConfig
 import os
 import secrets
+from flask_bcrypt import Bcrypt
 
 # This function is called just below library imports to load all app configuration
 load_dotenv()
 
 app = Flask(__name__)
 api = Blueprint('api', __name__, url_prefix=API_PREFIX)
-app.register_blueprint(api)
+
+#Bcrypt
+bcrypt = Bcrypt(app)
 
 # Just allows requests from frontend management server,
 # By default Flask doesn't allow requests from other hosts
@@ -41,4 +44,7 @@ migrate = Migrate(app, db)
 
 from .database.models import User, Role, Product, Order
 from . import console
+
 from .routes import *
+
+app.register_blueprint(api)
