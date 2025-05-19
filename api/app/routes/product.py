@@ -5,7 +5,7 @@ from app.database.models import Product
 from app.constants import API_PREFIX
 
 #Personalizadas
-@api.route("/buy/<id>")
+@api.route("/buy/<id>", methods=["GET"])
 def buy_product(id = None):
     if not id:
         return jsonify("id param is required"), 400
@@ -14,17 +14,17 @@ def buy_product(id = None):
         return jsonify("no product with that id found"), 404
     return products[0].to_dict()
 
-#Crud
+# GET - Get all products
 @api.route('/product', methods=['GET'])
 def get_products():
     return jsonify([p.to_dict() for p in Product.query.all()])
 
-
+# GET - Get product by ID
 @api.route('/product/<int:id>', methods=['GET'])
 def get_product(id):
     return jsonify(Product.query.get_or_404(id).to_dict())
 
-
+# POST - Create product
 @api.route('/product', methods=['POST'])
 def create_product():
     data = request.get_json()
@@ -37,7 +37,7 @@ def create_product():
     db.session.commit()
     return jsonify(product.to_dict()), 201
 
-
+# PUT - Update product by ID
 @api.route('/product/<int:id>', methods=['PUT'])
 def update_product(id):
     product = Product.query.get_or_404(id)
@@ -50,6 +50,7 @@ def update_product(id):
     return jsonify(product.to_dict())
 
 
+# DELETE - Delete product by ID
 @api.route('/product/<int:id>', methods=['DELETE'])
 def delete_product(id):
     product = Product.query.get_or_404(id)
