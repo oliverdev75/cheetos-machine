@@ -11,7 +11,7 @@ user_role = db.Table(
 )
 
 product_order = db.Table(
-    'product_order',
+    'order_product',
     db.Column('product_id', db.Integer, db.ForeignKey('products.id'), primary_key=True),
     db.Column('order_id', db.Integer, db.ForeignKey('orders.id'), primary_key=True)
 )
@@ -52,12 +52,13 @@ class Product(db.Model):
     image = db.Column(String(255), nullable=False)
     created_at = db.Column(DateTime(), default=datetime.now(), nullable=False)
     updated_at = db.Column(DateTime(), default=None)
-    orders = db.relationship("Order", secondary="product_order", backref="products")
+    orders = db.relationship("Order", secondary="order_product", backref="products")
 
     def to_dict(self):
         return {
             'id': self.id,
             'name': self.name,
+            'orders': self.orders,
             'created_at': self.created_at,
             'updated_at': self.updated_at
         }
