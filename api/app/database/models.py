@@ -33,6 +33,11 @@ class User(db.Model):
     def to_dict(self):
         data = {
             'id': self.id,
+            'name': self.name,
+            'email': self.email,
+            'password': self.password,
+            'roles': self.roles,
+            'orders': self.orders,
             'created_at': self.created_at,
             'updated_at': self.updated_at
         }
@@ -58,7 +63,11 @@ class Product(db.Model):
         return {
             'id': self.id,
             'name': self.name,
+
+            'price': self.price,
+            'image': self.image,
             'orders': self.orders,
+
             'created_at': self.created_at,
             'updated_at': self.updated_at
         }

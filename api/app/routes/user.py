@@ -3,14 +3,17 @@ from app import api, db, bcrypt
 from app.database.models import User
 from flask import jsonify, request
 
+# GET - Get all users
 @api.route("/user", methods=["GET"])
 def get_users():
     return jsonify([u.to_dict() for u in User.query.all()])
 
+# GET - Get user by ID
 @api.route("/user/<int:id>", methods=["GET"])
 def get_user(id):
     return jsonify(User.query.get_or_404(id).to_dict())
 
+# POST - Create user
 @api.route("/user", methods=['POST'])
 def create_user():
     data = request.get_json(force=True)
@@ -34,7 +37,7 @@ def create_user():
 
     return jsonify({'success': True, 'data': user.to_dict()}), 201
 
-
+# PUT - Update user by ID
 @api.route("/user/<int:id>", methods=["PUT"])
 def update_user(id):
     user = User.query.get_or_404(id)
@@ -46,6 +49,7 @@ def update_user(id):
     db.session.commit()
     return jsonify(user.to_dict())
 
+# DELETE - Delete user by ID
 @api.route("/user/<int:id>", methods=["DELETE"])
 def delete_user(id):
     user = User.query.get_or_404(id)

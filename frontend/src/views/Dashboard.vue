@@ -1,22 +1,21 @@
 <script setup lang="ts">
 import { onMounted } from 'vue';
 import useApi from '../composables/api';
-import useLogin from '../composables/useLogin';
+import useAuth from '../composables/useAuth';
 
 const api = useApi();
 
-onMounted(async () => {
 
-})
+const tryLogin = async () => 
+{
+  const tryToLogin = useAuth();
+  const response = await tryToLogin("test@demo.com");
+  console.log(response);
+};
 
-  const tryLogin = async () => {
-    const tryToLogin = useLogin(); 
-    const response = await tryToLogin("test@demo.com");
-    console.log(response);
-  };
-
-  /* TEST (se puede borrar si es necesario) */
-const ping = async () => {
+/* TEST (se puede borrar si es necesario) */
+const ping = async () => 
+{
   try {
     const response = await api.get('/api/ping');
     console.log(response.data);

@@ -1,4 +1,4 @@
-from app import api
+from app import api, app
 from app.database.models import User
 from flask import request, jsonify
 from datetime import datetime, timezone, timedelta
@@ -10,11 +10,11 @@ def login():
     user = User.query.filter_by(email = data['email'], password = data['password']).first()
     if user:
         token = jwt.encode({
-            'sub': user['email'],
+            'sub': user.email,
             'iat': datetime.now(timezone.utc),  # Specify timezone, timezone has to be imported
             'exp': datetime.now(timezone.utc) + timedelta(minutes=30)
             },
-            app.secret_key,
+            app.config['SECRET_KEY']
         )
         return jsonify({
             'success': True,
