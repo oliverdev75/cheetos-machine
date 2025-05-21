@@ -11,7 +11,7 @@
       <button v-if="editing" type="button" @click="resetForm">Cancel</button>
     </form>
 
-    <table>
+    <table class="table-auto w-full border border-gray-300 border-collapse">
       <thead>
         <tr>
           <th>Name</th>
@@ -102,3 +102,14 @@ const resetForm = () => {
   editId.value = null
 }
 </script>
+
+<style scoped>
+table, td, th {
+    border: 2px solid black;
+    padding: 10px;
+
+    border-collapse: collapse;
+
+    margin: 10px;
+}
+</style>

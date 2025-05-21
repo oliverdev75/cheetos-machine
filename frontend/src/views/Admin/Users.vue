@@ -11,19 +11,19 @@
         <button v-if="editing" type="button" @click="resetForm">Cancel</button>
     </form>
 
-    <table>
+    <table class="table-auto w-full border border-gray-300 border-collapse">
       <thead>
-        <tr>
+        <tr class="bg-gray-100">
           <th>Name</th>
           <th>Email</th>
           <th>Actions</th>
         </tr>
       </thead>
       <tbody>
-        <tr v-for="user in users" :key="user.id">
-          <td>{{ user.name }}</td>
-          <td>{{ user.email }}</td>
-          <td>
+        <tr class="bg-gray-100" v-for="user in users" :key="user.id">
+          <td class="border border-gray-300 px-4 py-2">{{ user.name }}</td>
+          <td class="border border-gray-300 px-4 py-2">{{ user.email }}</td>
+          <td class="border border-gray-300 px-4 py-2">
             <button @click="editUser(user)">Edit</button>
             <button @click="deleteUser(user.id)">Delete</button>
           </td>
@@ -101,3 +101,14 @@ const resetForm = () => {
 }
 
 </script>
+
+<style scoped>
+table, td, th {
+    border: 2px solid black;
+    padding: 10px;
+
+    border-collapse: collapse;
+
+    margin: 10px;
+}
+</style>

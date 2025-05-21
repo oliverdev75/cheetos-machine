@@ -13,9 +13,9 @@ let pageSelector = ref(1)
 <h1>Admin Panel</h1>
 <hr>
 <button @click="pageSelector = 1">Users</button>
-<button @click="pageSelector = 2">Roles</button>
 <button @click="pageSelector = 3">Products</button>
 <button @click="pageSelector = 4">Orders</button>
+<button @click="pageSelector = 2">Roles</button>
 <hr/>
 
 <Users v-if="pageSelector == 1" />

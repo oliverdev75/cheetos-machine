@@ -9,7 +9,7 @@
       <button type="submit">Create Order</button>
     </form>
 
-    <table>
+    <table class="table-auto w-full border border-gray-300 border-collapse">
       <thead>
         <tr>
           <th>ID</th>
@@ -86,3 +86,14 @@ const formatDate = (datetimeString) => {
   return new Date(datetimeString).toLocaleString()
 }
 </script>
+
+<style scoped>
+table, td, th {
+    border: 2px solid black;
+    padding: 10px;
+
+    border-collapse: collapse;
+
+    margin: 10px;
+}
+</style>
