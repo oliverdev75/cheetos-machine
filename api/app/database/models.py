@@ -87,8 +87,15 @@ class Order(db.Model):
     updated_at = db.Column(DateTime(), default=None)
 
     def to_dict(self):
-        data = { 'id': self.id, 'created_at': self.created_at, 'updated_at': self.updated_at }
-        return data
+        return {
+            'id': self.id,
+            'user_id': self.user_id,
+            'price': self.price,
+            'created_at': self.created_at,
+            'updated_at': self.updated_at,
+            'products': [p.id for p in self.products]  # Agrega los productos
+        }
+
 
     def __repr__(self):
         return f"<Order >"
