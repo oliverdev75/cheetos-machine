@@ -1,6 +1,7 @@
 import Home from '../views/Home.vue'
 import About from '../views/About.vue'
 import Dashboard from '../views/Dashboard.vue'
+import Login from '../views/Login.vue'
 
 export default [
     {
@@ -13,7 +14,12 @@ export default [
         path: '/about',
         component: About,
     },
-        {
+    {
+        name: 'login',
+        path: '/login',
+        component: Login,
+    },
+    {
         name: 'dashboard',
         path: '/dashboard',
         component: Dashboard,
