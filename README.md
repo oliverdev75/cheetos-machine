@@ -10,7 +10,7 @@ Sintesis_Proyecto-MaquinaExpendedora/
 │   ├── app.py
 │   └── api/
 │       └── rutas.py
-├── tw-ts-vue/          (frontend)
+├── frontend/          (frontend)
 │   ├── public/
 │   ├── src/
 │   │   ├── App.vue
@@ -20,6 +20,20 @@ Sintesis_Proyecto-MaquinaExpendedora/
 ├── README.md
 ```
 
+# Estructura BBDD
+## Tablas:
+ - Usuarios
+ - Productos
+ - Pedidos
+ - Pedido_Producto
+
+## Relaciones:
+ - Usuarios pueden realizar - 0,N -> Pedidos
+ - Productos pertenece a - 0,1 -> Usuarios
+ - Pedido puede contener - 0,1 -> Productos
+ - Producto puede estar en - 0,N -> Pedidos
+
+
 # Instalacion:
 ## Instalacion de Python
 https://www.python.org/downloads/
@@ -28,7 +42,7 @@ Marcar la opcion de "**Añadir python a las variables de entorno**".
 
 ### Instalar VENV
 ```bash
-cd flask-api
+cd api
 python.exe -m venv .venv
 ```
 
@@ -42,24 +56,25 @@ https://nodejs.org/en/download
 
 # Iniciar Proyecto
 ```bash
-.\flask-api\.venv\Scripts\activate
-cd flask-api
+.\api\.venv\Scripts\activate
+cd api
 flask run
 ```
 ## Iniciar Venv
 ```bash
+cd api
 .\.venv\Scripts\activate
 ```
 
 ## Flask
 ```bash
-cd flask-api
+cd api
 flask run
 ```
 ## Vue
 *En otra terminal.*
 ```bash
-cd tw-ts-vue
+cd frontend
 npm run dev
 ```
 
