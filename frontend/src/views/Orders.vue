@@ -1,30 +1,33 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
+import { useRouter } from 'vue-router'
 import useOrders from '../composables/useOrders'
 import useLogin from '../composables/useAuth'
 
-const { getUserIdFromToken } = useLogin();
+const router = useRouter()
+const { getUser } = useLogin()
 const { getOrders, createOrder, deleteOrder, checkLastOrderDeliverDate, deliverLastOrder } = useOrders()
-const orders = ref([])
 
-const userId = ref<number | null>(null)
+const orders = ref([])
+const user = ref(null)
 
 onMounted(async () => {
-  const token = localStorage.getItem('authToken')
-  if (token) {
-    userId.value = getUserIdFromToken(token)
-  }
+  console.log("InMounted")
+  user.value = await getUser()
 
   orders.value = await getOrders()
-  checkLastOrderDeliverDate(userId.value);
+  await checkLastOrderDeliverDate(user.value.id)
 })
 
+
+
 const newOrder = async () => {
-  const res = await createOrder(userId.value, 19.99, [1, 2])
+  console.log("user.value")
+  console.log(user.value)
+  const res = await createOrder(user.value.id, 19.99, [1, 2])
   console.log('Pedido creado:', res)
   orders.value = await getOrders()
 }
-
 
 const removeOrder = async (id: number) => {
   await deleteOrder(id)
@@ -33,17 +36,19 @@ const removeOrder = async (id: number) => {
 
 const deliver = async () => {
   try {
-    const res = await deliverLastOrder(1)
+    const res = await deliverLastOrder(user.value.id)
     console.log('Pedido entregado:', res)
-    orders.value = await getOrders()  // refresca la lista
+    orders.value = await getOrders()
   } catch (e) {
     console.error(e)
   }
 }
-
 </script>
 
+
 <template>
+  <h1>User</h1>
+  <p>Email:</p>
   <h1>Pedidos</h1>
   <button @click="newOrder">Crear pedido</button>
   <button @click="deliver">Deliver</button>

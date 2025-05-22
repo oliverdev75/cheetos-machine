@@ -37,7 +37,7 @@ class User(db.Model):
             'email': self.email,
             'password': self.password,
             'roles': self.roles,
-            'orders': self.orders,
+            'orders': [order.to_dict() for order in self.orders],
             'created_at': self.created_at,
             'updated_at': self.updated_at
         }
