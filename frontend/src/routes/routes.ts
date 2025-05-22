@@ -1,8 +1,13 @@
 import Home from '../views/Home.vue'
 import About from '../views/About.vue'
 import Dashboard from '../views/Dashboard.vue'
+
 import Admin from '../views/Admin/Admin.vue'
 import Carta from '../views/Carta.vue'
+
+import Login from '../views/Login.vue'
+import Orders from '../views/Orders.vue'
+
 
 export default [
     {
@@ -16,10 +21,18 @@ export default [
         component: About,
     },
     {
+
+        name: 'login',
+        path: '/login',
+        component: Login,
+    },
+    {
+
         name: 'dashboard',
         path: '/dashboard',
         component: Dashboard,
     },
+
     {
         name: 'admin',
         path: '/admin',
@@ -29,5 +42,12 @@ export default [
         name: 'carta',
         path: '/carta',
         component: Carta,
+
+    },
+    {
+        name: 'orders',
+        path: '/orders',
+        component: Orders,
+
     }
 ]
