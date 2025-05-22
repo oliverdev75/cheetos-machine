@@ -57,7 +57,8 @@ class Product(db.Model):
     image = db.Column(String(255), nullable=False)
     created_at = db.Column(DateTime(), default=datetime.now(), nullable=False)
     updated_at = db.Column(DateTime(), default=None)
-    orders = db.relationship("Order", secondary="order_product", backref="products")
+
+    orders = db.relationship("Order", secondary="order_product", back_populates="products")
 
     def to_dict(self):
         return {
@@ -76,28 +77,30 @@ class Product(db.Model):
         return f"<Product >"
 
 
-@dataclass
 class Order(db.Model):
     __tablename__ = 'orders'
 
     id = db.Column(Integer(), primary_key=True)
     user_id = db.Column(Integer(), ForeignKey('users.id'), nullable=False)
     price = db.Column(Float(2), nullable=False)
-    created_at = db.Column(DateTime(), default=datetime.now(), nullable=False)
+    delivered_at = db.Column(DateTime(), default=None)
+    
+    created_at = db.Column(DateTime(), default=datetime.now, nullable=False)
     updated_at = db.Column(DateTime(), default=None)
+
+    products = db.relationship("Product", secondary="order_product", back_populates="orders")
 
     def to_dict(self):
         return {
             'id': self.id,
             'user_id': self.user_id,
             'price': self.price,
+            'delivered_at': self.delivered_at,
             'created_at': self.created_at,
             'updated_at': self.updated_at,
-            'products': [p.id for p in self.products]  # Agrega los productos
+            'products': [p.id for p in self.products]
         }
 
-    def __repr__(self):
-        return f"<Order >"
 
 
 @dataclass

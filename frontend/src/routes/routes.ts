@@ -39,12 +39,14 @@ export default [
         component: Admin,
     },
     {
+
         name: 'carta',
         path: '/carta',
         component: Carta,
 
     },
     {
+
         name: 'orders',
         path: '/orders',
         component: Orders,

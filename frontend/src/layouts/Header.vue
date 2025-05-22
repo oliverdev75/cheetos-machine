@@ -3,47 +3,21 @@
 </script>
 
 <template>
-
-    <header>
-        <img class="logo" src="./Cheetos_logo.png">
-        <nav>
-            <router-link class="route-link" to="/">Inicio</router-link>
-            <router-link class="route-link" to="/dashboard">Dashboard</router-link>
+  <div class="bg-[#E57600] w-full h-20 py-5 px-2 flex justify-center">
+    <div class="w-[90%] flex items-center justify-between mx-15">
+        <div>
+          <router-link to=""><img src="./../../public/images/logo.svg" alt="" class="w-75 fixed"></router-link>
+        </div>
+        <nav class="text-white flex justify-between w-200 text-2xl font-bold">
+          <router-link to="/">Home</router-link>
+          <router-link to="/dashboard">Pedir</router-link>
+          <router-link to="/about-us">Sobre nosotros</router-link>
+          <router-link to="/account">Cuenta</router-link>
         </nav>
-    </header>
-
+        <div class="flex items-center text-2xl font-bold text-white">
+          <p>12 Tokens</p>
+          <img src="./../../public/images/Frame.svg" alt="" class="w-15">
+        </div>
+    </div>
+  </div>
 </template>
-
-<style scoped>
-header {
-    padding: 16px;
-    width: 100%;
-    background-color: #E57600;
-
-    display: flex;
-    flex-direction: row;
-
-    box-sizing: border-box;
-}
-
-nav {
-    margin-left: 32px;
-    margin-right: 32px;
-    align-content: space-between;
-
-    display: flex;
-
-    gap: 32px;
-    font-size: larger;
-}
-
-.route-link {
-    color: white;
-    text-decoration: none;
-}
-
-.logo {
-    width: 25vw;
-    height: auto;
-}
-</style>
