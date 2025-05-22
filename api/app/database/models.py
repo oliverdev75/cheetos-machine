@@ -83,6 +83,8 @@ class Order(db.Model):
     id = db.Column(Integer(), primary_key=True)
     user_id = db.Column(Integer(), ForeignKey('users.id'), nullable=False)
     price = db.Column(Float(2), nullable=False)
+    delivered_at = db.Column(DateTime(), default=None)
+    
     created_at = db.Column(DateTime(), default=datetime.now(), nullable=False)
     updated_at = db.Column(DateTime(), default=None)
 
