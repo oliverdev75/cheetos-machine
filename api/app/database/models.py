@@ -96,7 +96,6 @@ class Order(db.Model):
             'products': [p.id for p in self.products]  # Agrega los productos
         }
 
-
     def __repr__(self):
         return f"<Order >"
 
