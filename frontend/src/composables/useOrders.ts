@@ -56,11 +56,25 @@ export default function useOrders() {
         }
     }
 
+    const deliverLastOrder = async (user_id: number) => {
+        try {
+            const res = await api.post('/order/deliver', { user_id });
+            return res.data;
+        } catch (error: any) {
+            if (error.response && error.response.data && error.response.data.message) {
+                throw new Error(`Error delivering order: ${error.response.data.message}`);
+            }
+            throw new Error(`Error delivering order: ${error.message || 'Unknown error'}`);
+        }
+    };
+
+
     return {
         getOrders,
         getOrder,
         createOrder,
         deleteOrder,
-        checkLastOrderDeliverDate
+        checkLastOrderDeliverDate,
+        deliverLastOrder
     }
 }

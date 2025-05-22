@@ -70,3 +70,26 @@ def order_check():
         return jsonify({'order': last_order.to_dict()})
     else:
         return jsonify({'order': None})
+    
+@api.route('/order/deliver', methods=['POST'])
+def deliver_last_order():
+    user_id = request.json.get('user_id')
+    if not user_id:
+        return jsonify({'success': False, 'message': 'user_id is required'}), 400
+
+    # Buscar el último pedido sin entregar de ese usuario
+    last_order = (
+        Order.query
+        .filter(Order.user_id == user_id)
+        .order_by(desc(Order.created_at))
+        .first()
+    )
+
+    if not last_order:
+        return jsonify({'success': False, 'message': 'No pending orders found for this user'}), 404
+
+    # Asignar la fecha actual
+    last_order.delivered_at = datetime.utcnow()
+    db.session.commit()
+
+    return jsonify({'success': True, 'message': 'Order marked as delivered', 'order': last_order.to_dict()})
