@@ -2,6 +2,7 @@ from datetime import datetime
 from flask import jsonify, request
 from app import api, db
 from app.database.models import Order, Product
+from sqlalchemy import desc
 
 #CRD
 @api.route('/order', methods=['GET'])
@@ -49,3 +50,23 @@ def delete_order(id):
     db.session.delete(order)
     db.session.commit()
     return jsonify({'message': 'Order deleted'})
+
+
+@api.route('/order/check', methods=['GET'])
+def order_check():
+    user_id = request.args.get('user_id', type=int)
+
+    if not user_id:
+        return jsonify({'success': False, 'message': 'user_id parameter is required'}), 400
+
+    last_order = (
+        db.session.query(Order)
+        .filter(Order.user_id == user_id, Order.delivered_at == None)
+        .order_by(desc(Order.created_at))
+        .first()
+    )
+
+    if last_order:
+        return jsonify({'order': last_order.to_dict()})
+    else:
+        return jsonify({'order': None})

@@ -85,7 +85,7 @@ class Order(db.Model):
     price = db.Column(Float(2), nullable=False)
     delivered_at = db.Column(DateTime(), default=None)
     
-    created_at = db.Column(DateTime(), default=datetime.now(), nullable=False)
+    created_at = db.Column(DateTime(), default=datetime.now, nullable=False)
     updated_at = db.Column(DateTime(), default=None)
 
     products = db.relationship("Product", secondary="order_product", back_populates="orders")
@@ -95,6 +95,7 @@ class Order(db.Model):
             'id': self.id,
             'user_id': self.user_id,
             'price': self.price,
+            'delivered_at': self.delivered_at,
             'created_at': self.created_at,
             'updated_at': self.updated_at,
             'products': [p.id for p in self.products]

@@ -2,11 +2,12 @@
 import { onMounted, ref } from 'vue'
 import useOrders from '../composables/useOrders'
 
-const { getOrders, createOrder, deleteOrder } = useOrders()
+const { getOrders, createOrder, deleteOrder, checkLastOrderDeliverDate } = useOrders()
 const orders = ref([])
 
 onMounted(async () => {
     orders.value = await getOrders()
+    checkLastOrderDeliverDate(1);
 })
 
 const newOrder = async () => {
