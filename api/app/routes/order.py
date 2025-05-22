@@ -1,7 +1,7 @@
 from datetime import datetime
 from flask import jsonify, request
 from app import api, db
-from app.database.models import Order
+from app.database.models import Order, Product
 
 #CRD
 @api.route('/order', methods=['GET'])
@@ -16,7 +16,10 @@ def get_order(id):
 
 @api.route('/order', methods=['POST'])
 def create_order():
-    data = request.get_json()
+    data = request.get_json(silent=True)
+
+    if not data:
+        return jsonify({'success': False, 'message': 'Invalid or missing JSON'}), 400
 
     if not all(k in data for k in ('user_id', 'price', 'products')):
         return jsonify({'success': False, 'message': 'Missing required fields'}), 400

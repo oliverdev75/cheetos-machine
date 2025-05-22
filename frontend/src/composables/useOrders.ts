@@ -22,18 +22,13 @@ export default function useOrders() {
         }
     }
 
-    const createOrder = async (userId: number, price: number, products: number[]) => {
-        const res = await fetch('/api/order', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                user_id: userId,
-                price: price,
-                products: products
-            })
-        })
+    const createOrder = async (user_id: number, price: number, products: number[]) => {
+        const res = await api.post('/order',
+            {
+                user_id, price, products
+            }
+        );
+
         return await res.json()
     }
 
