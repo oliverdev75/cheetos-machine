@@ -36,8 +36,8 @@ export default [
         name: 'admin',
         path: '/admin',
         component: Admin,
-
-        {
+    },
+    {
         name: 'orders',
         path: '/orders',
         component: Orders,
