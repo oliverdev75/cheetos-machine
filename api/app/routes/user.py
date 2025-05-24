@@ -6,7 +6,15 @@ from flask import jsonify, request
 # GET - Get all users
 @api.route("/user", methods=["GET"])
 def get_users():
-    return jsonify([u.to_dict() for u in User.query.all()])
+    email = request.args.get('email')
+    if email:
+        user = User.query.filter_by(email=email).first()
+        if user:
+            return jsonify(user.to_dict())
+        else:
+            return jsonify({'message': 'User not found'}), 404
+    else:
+        return jsonify([u.to_dict() for u in User.query.all()])
 
 # GET - Get user by ID
 @api.route("/user/<int:id>", methods=["GET"])
