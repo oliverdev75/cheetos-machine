@@ -7,7 +7,7 @@ const password = ref(""); // si luego lo necesitas
 
 const tryToLogin = useLogin();
 
-async function Login() {
+async function login() {
     console.log("Login");
     console.log(email.value);
 
@@ -17,7 +17,7 @@ async function Login() {
 
 <template>
     <h1>Login</h1>
-    <form @submit.prevent="Login" class="d-flex">
+    <form @submit.prevent="login" class="d-flex">
         <div>
             <label for="email">Email:</label>
             <input v-model="email" type="email" id="email" />
