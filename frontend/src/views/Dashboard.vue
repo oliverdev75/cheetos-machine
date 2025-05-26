@@ -30,12 +30,12 @@ const ping = async () =>
     <div class="mainDashboardGrid">
 
       <div class="grid-item" style=" grid-area: 1 / 2 / 2 / 3; background: #9EECA0;">
-        <button @click="tryLogin">
+        <Button @click="tryLogin">
           Login!
-        </button>
-        <button @click="ping">
+        </Button>
+        <Button @click="ping">
           Ping!
-        </button>
+        </Button>
       </div>
 
       <div class="grid-item" style=" grid-area: 2 / 2 / 6 / 3; background: #9D8DE0;"> </div>

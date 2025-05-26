@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import { ref } from 'vue'
 
-const message = ref('Welcome to the Home Page!')
 </script>
 
 <template>
-    <h1>{{ message }}</h1>
+    <div class="w-full bg-[url('/images/Background.png')] flex justify-evenly">
+        <img src="/images/Home_Text.svg" alt="Trademark title" class="text-2xl">
+        <img src="/images/Narangin_1.png" alt="Trademark pet">
+    </div>
 </template>

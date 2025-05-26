@@ -9,22 +9,22 @@ const { getUser } = useLogin()
 const { getOrders, createOrder, deleteOrder, checkLastOrderDeliverDate, deliverLastOrder } = useOrders()
 
 const orders = ref([])
-const user = ref(null)
+const user = ref()
 
 onMounted(async () => {
   console.log("InMounted")
   user.value = await getUser()
 
   orders.value = await getOrders()
-  await checkLastOrderDeliverDate(user.value.id)
+  await checkLastOrderDeliverDate(user.value?.id)
 })
 
 
 
 const newOrder = async () => {
-  console.log("user.value")
+  console.log("user.value?")
   console.log(user.value)
-  const res = await createOrder(user.value.id, 19.99, [1, 2])
+  const res = await createOrder(user.value?.id, 19.99, [1, 2])
   console.log('Pedido creado:', res)
   orders.value = await getOrders()
 }
@@ -36,7 +36,7 @@ const removeOrder = async (id: number) => {
 
 const deliver = async () => {
   try {
-    const res = await deliverLastOrder(user.value.id)
+    const res = await deliverLastOrder(user.value?.id)
     console.log('Pedido entregado:', res)
     orders.value = await getOrders()
   } catch (e) {

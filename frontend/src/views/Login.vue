@@ -6,7 +6,7 @@ const { getUser, tryToLogin } = useLogin();
 
 const email = ref("");
 const password = ref("");
-const user = ref(null); // Aquí guardaremos al usuario una vez logueado
+const user = ref(); // Aquí guardaremos al usuario una vez logueado
 
 async function login() {
     console.log("Login");

@@ -1,11 +1,10 @@
 import Home from '../views/Home.vue'
 import About from '../views/About.vue'
 import Dashboard from '../views/Dashboard.vue'
-
 import Admin from '../views/Admin/Admin.vue'
-import Carta from '../views/Carta.vue'
-
+import Menu from '../views/Menu.vue'
 import Login from '../views/Login.vue'
+import Account from '../views/Account.vue'
 import Orders from '../views/Orders.vue'
 
 
@@ -28,6 +27,12 @@ export default [
     },
     {
 
+        name: 'account',
+        path: '/account',
+        component: Account,
+    },
+    {
+
         name: 'dashboard',
         path: '/dashboard',
         component: Dashboard,
@@ -40,9 +45,9 @@ export default [
     },
     {
 
-        name: 'carta',
+        name: 'menu',
         path: '/carta',
-        component: Carta,
+        component: Menu,
 
     },
     {
