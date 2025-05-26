@@ -14,18 +14,19 @@ def buy_product(id = None):
         return jsonify("no product with that id found"), 404
     return products[0].to_dict()
 
-# GET - Get all products
-@api.route('/product', methods=['GET'])
+
+@api.route('/products', methods=['GET'])
 def get_products():
     return jsonify([p.to_dict() for p in Product.query.all()])
 
 # GET - Get product by ID
-@api.route('/product/<int:id>', methods=['GET'])
+@api.route('/products/<int:id>', methods=['GET'])
 def get_product(id):
     return jsonify(Product.query.get_or_404(id).to_dict())
 
+
 # POST - Create product
-@api.route('/product', methods=['POST'])
+@api.route('/products', methods=['POST'])
 def create_product():
     data = request.get_json()
     product = Product(
@@ -37,8 +38,9 @@ def create_product():
     db.session.commit()
     return jsonify(product.to_dict()), 201
 
+
 # PUT - Update product by ID
-@api.route('/product/<int:id>', methods=['PUT'])
+@api.route('/products/<int:id>', methods=['PUT'])
 def update_product(id):
     product = Product.query.get_or_404(id)
     data = request.get_json()
@@ -51,7 +53,7 @@ def update_product(id):
 
 
 # DELETE - Delete product by ID
-@api.route('/product/<int:id>', methods=['DELETE'])
+@api.route('/products/<int:id>', methods=['DELETE'])
 def delete_product(id):
     product = Product.query.get_or_404(id)
     db.session.delete(product)

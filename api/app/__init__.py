@@ -16,9 +16,6 @@ load_dotenv()
 app = Flask(__name__)
 api = Blueprint('api', __name__, url_prefix=API_PREFIX)
 
-#Bcrypt
-bcrypt = Bcrypt(app)
-
 # Just allows requests from frontend management server,
 # By default Flask doesn't allow requests from other hosts
 CORS(app, origins="http://localhost:5173")
