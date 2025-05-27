@@ -17,44 +17,44 @@ export default function useApi() {
         }
     }
 
+    const createPromise = (req: any) => {
+        return new Promise(async (resolve, reject) => {
+            try {
+                const res = await req()
+                resolve(res.data)
+            } catch (error) {
+                reject(error)
+            }
+        })
+    }
+
+    const makeParams = (params: object | undefined) => {
+        let urlParams = "?"
+        const paramNames = params ? Object.keys(params) : []
+        const paramValues = params ? Object.values(params) : []
+
+        for (let i = 0; i < paramNames.length; i++) {
+            urlParams += paramNames[i] + '='
+            urlParams += paramValues[i] + '&'
+        }
+
+        return urlParams.substring(0, urlParams.length)
+    }
+
     const get = async (url: string, params?: any) => {
-        try {
-            const res = await client.get(url, { params })
-            return res.data
-        } catch (error) {
-            console.error("API GET error:", error)
-            throw error
-        }
+        return createPromise(() => client.get(url + makeParams(params)))
     }
 
-    const post = async (url: string, data: any) => {
-        try {
-            const res = await client.post(url, data)
-            return res.data
-        } catch (error) {
-            console.error("API POST error:", error)
-            throw error
-        }
+    const post = async (url: string, data: any, params?: object) => {
+        return createPromise(() => client.post(url + makeParams(params), data))
     }
 
-    const put = async (url: string, data: any) => {
-        try {
-            const res = await client.put(url, data)
-            return res.data
-        } catch (error) {
-            console.error("API PUT error:", error)
-            throw error
-        }
+    const put = async (url: string, data: any, params?: object) => {
+        return createPromise(() => client.put(url + makeParams(params), data))
     }
 
-    const del = async (url: string) => {
-        try {
-            const res = await client.delete(url)
-            return res.data
-        } catch (error) {
-            console.error("API DELETE error:", error)
-            throw error
-        }
+    const del = async (url: string, params?: object) => {
+        return createPromise(() => client.delete(url + createPromise(params)))
     }
 
     return {

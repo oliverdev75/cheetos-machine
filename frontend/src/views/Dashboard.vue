@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { onMounted } from 'vue';
 import useApi from '../composables/api';
-import useAuth from '../composables/useAuth';
+import useAuth from '../composables/auth';
 
 const api = useApi();
 

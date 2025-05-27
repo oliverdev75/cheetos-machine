@@ -5,46 +5,40 @@ from app.database.models import Order, Product
 from sqlalchemy import desc
 
 #CRD
-@api.route('/order', methods=['GET'])
+@api.route('/orders', methods=['GET'])
 def get_orders():
     return jsonify([o.to_dict() for o in Order.query.all()])
 
 
-@api.route('/order/<int:id>', methods=['GET'])
+@api.route('/orders/<int:id>', methods=['GET'])
 def get_order(id):
     return jsonify(Order.query.get_or_404(id).to_dict())
 
 
-@api.route('/order', methods=['POST'])
+@api.route('/orders', methods=['POST'])
 def create_order():
-    data = request.get_json(silent=True)
+    data = request.get_json(force=True)
 
     if not data:
         return jsonify({'success': False, 'message': 'Invalid or missing JSON'}), 400
 
-    if not all(k in data for k in ('user_id', 'price', 'products')):
+    if not all(k in data for k in ('user_id', 'product')):
         return jsonify({'success': False, 'message': 'Missing required fields'}), 400
 
     order = Order(
         user_id=data['user_id'],
-        price=data['price']
+        product_id=data['product']['id'],
+        price=data['product']['price'],
     )
 
-    product_ids = data['products']
-    products = Product.query.filter(Product.id.in_(product_ids)).all()
-
-    if len(products) != len(product_ids):
-        return jsonify({'success': False, 'message': 'One or more products not found'}), 404
-
-    order.products.extend(products)
-
+    order.products.add(Product.query.get_or_404(data['product']['id']))
     db.session.add(order)
     db.session.commit()
 
     return jsonify(order.to_dict()), 201
 
 
-@api.route('/order/<int:id>', methods=['DELETE'])
+@api.route('/orders/<int:id>', methods=['DELETE'])
 def delete_order(id):
     order = Order.query.get_or_404(id)
     db.session.delete(order)
@@ -71,7 +65,7 @@ def order_check():
     else:
         return jsonify({'order': None})
     
-@api.route('/order/deliver', methods=['POST'])
+@api.route('/orders/deliver', methods=['POST'])
 def deliver_last_order():
     user_id = request.json.get('user_id')
     if not user_id:

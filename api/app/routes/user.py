@@ -2,6 +2,7 @@ from datetime import datetime
 from app import api, db
 from app.database.models import User
 from flask import jsonify, request
+import bcrypt
 
 @api.route("/user")
 def get_users():
@@ -31,7 +32,7 @@ def create_user():
     if User.query.filter_by(email=data['email']).first():
         return jsonify({'success': False, 'message': 'Email already exists'}), 409
 
-    hashed_password = bcrypt.hashpw(data['password'])
+    hashed_password = bcrypt.hashpw(data['password'].encode('utf-8'), bcrypt.gensalt())
 
     user = User(
         name=data['name'],

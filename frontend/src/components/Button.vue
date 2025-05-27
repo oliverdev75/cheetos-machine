@@ -21,15 +21,12 @@ withDefaults(
 
 <template>
     <button
-        class="flex items-center gap-3 px-2 py-2 rounded-md hover:cursor-pointer m-4"
+        class="flex items-center gap-3 py-1.5 rounded-md hover:cursor-pointer"
         :class="{
-            'text-white': !white,
-            'bg-gazpacho': !white,
-            'bg-btn-hover': !white,
-            'bg-white': white,
-            'text-gazpacho': white,
-            'w-fit': !fluid,
-            'w-full': fluid
+            'text-white bg-gazpacho hover:bg-btn-hover': !white,
+            'bg-white text-gazpacho': white,
+            'w-fit px-5': !fluid,
+            'w-full justify-center': fluid,
         }"
         v-bind="$attrs"
     >

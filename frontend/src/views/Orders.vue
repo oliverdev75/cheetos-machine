@@ -2,7 +2,7 @@
 import { onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import useOrders from '../composables/useOrders'
-import useLogin from '../composables/useAuth'
+import useLogin from '../composables/auth'
 
 const router = useRouter()
 const { getUser } = useLogin()

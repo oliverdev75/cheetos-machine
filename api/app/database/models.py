@@ -16,7 +16,6 @@ product_order = db.Table(
     db.Column('order_id', db.Integer, db.ForeignKey('orders.id'), primary_key=True)
 )
 
-#Tablas
 @dataclass
 class User(db.Model):
     __tablename__ = 'users'
@@ -25,6 +24,7 @@ class User(db.Model):
     name = db.Column(String(255), nullable=False)
     email = db.Column(String(255), unique=True)
     password = db.Column(String(255), nullable=False)
+    cash = db.Column(Float(precision=2), default=0.0, nullable=False)
     created_at = db.Column(DateTime(), default=datetime.now(), nullable=False)
     updated_at = db.Column(DateTime(), default=None)
     roles = db.relationship("Role", secondary="user_role", backref="users")

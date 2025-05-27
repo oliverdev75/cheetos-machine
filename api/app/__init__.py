@@ -18,7 +18,7 @@ api = Blueprint('api', __name__, url_prefix=API_PREFIX)
 
 # Just allows requests from frontend management server,
 # By default Flask doesn't allow requests from other hosts
-CORS(app, origins="http://localhost:5173")
+CORS(app, resources={r"/api/*": {"origins": "http://localhost:5173"}})
 
 db_config = DatabaseConfig(
     type=os.getenv('DB_CONNECTION'),
