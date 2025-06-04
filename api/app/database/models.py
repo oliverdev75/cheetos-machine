@@ -3,7 +3,6 @@ from datetime import datetime
 from dataclasses import dataclass
 from app import db
 
-#Tablas intermedias
 user_role = db.Table(
     'user_role',
     db.Column('user_id', db.Integer, db.ForeignKey('users.id'), primary_key=True),
@@ -35,7 +34,6 @@ class User(db.Model):
             'id': self.id,
             'name': self.name,
             'email': self.email,
-            'password': self.password,
             'roles': self.roles,
             'orders': [order.to_dict() for order in self.orders],
             'created_at': self.created_at,

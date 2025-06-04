@@ -1,27 +1,31 @@
 import { useRouter } from "vue-router"
-import useApi from "./api"
+import Api from "../utils/Api"
 import useAuthStore from "../store/auth"
 
 export default function useAuth() {
-    const api = useApi()
+    const api = Api.access()
     const router = useRouter()
     const authStore = useAuthStore()
 
     const login = async (email: string, password: string) => {
-        api.post("/login", { email, password })
+        await api.post("/login", { email, password })
             .then((data: any) => {
                 // Guarda el token
-                authStore.setAuthToken(data.token)
+                authStore.setToken(data.token)
                 authStore.user = data.user
 
-                // Setea el token para futuras peticiones
-                api.setAuthToken(data.token)
                 router.push({ name: 'menu' })
             })
     }
 
+    const logout = async () => {
+        authStore.removeToken()
+        authStore.user = null
+        router.push({ name: 'login' })
+    }
+
     const getUser = async () => {
-        const token = authStore.authToken
+        const token = authStore.token
         if (!token) 
             return null
 
@@ -44,6 +48,7 @@ export default function useAuth() {
 
     return {
         login,
+        logout,
         getUser
     }
 }

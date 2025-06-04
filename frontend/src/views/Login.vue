@@ -20,7 +20,7 @@ const login = () => {
     <div class="bg-white px-10 py-15 rounded-2xl flex flex-col gap-10">
       <h1 class="text-center text-gazpacho text-4xl">Log in</h1>
       <div class="flex flex-col gap-6">
-        <form @submit.prevent="login" class="flex flex-col gap-10 text-black">
+        <form @submit.prevent="login" class="flex flex-col gap-10 text-gazpacho">
           <div class="flex flex-col gap-4">
             <div class="flex gap-2 items-center">
                 <label for="email">Email:</label>

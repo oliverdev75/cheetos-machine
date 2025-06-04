@@ -36,9 +36,9 @@
 
 <script setup>
 import { ref, onMounted } from 'vue'
-import useApi from '../../composables/api'
+import Api from '../../utils/Api'
 
-const api = useApi()
+const api = Api.access()
 
 const orders = ref([])
 const form = ref({ user_id: '', price: '' })
@@ -46,7 +46,7 @@ const form = ref({ user_id: '', price: '' })
 // Obtener todas las órdenes
 const fetchOrders = async () => {
   try {
-    orders.value = await api.get('/order')
+    orders.value = await api.get('/orders')
   } catch (error) {
     console.error(error)
   }
@@ -57,7 +57,7 @@ onMounted(fetchOrders)
 // Crear nueva orden
 const handleSubmit = async () => {
   try {
-    await api.post('/order', form.value)
+    await api.post('/orders', form.value)
     await fetchOrders()
     resetForm()
   } catch (error) {
@@ -69,7 +69,7 @@ const handleSubmit = async () => {
 const deleteOrder = async (id) => {
   if (!confirm('Are you sure you want to delete this order?')) return
   try {
-    await api.del(`/order/${id}`)
+    await api.del(`/orders/${id}`)
     await fetchOrders()
   } catch (error) {
     console.error(error)

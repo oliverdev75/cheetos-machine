@@ -8,7 +8,6 @@ from .constants import API_PREFIX
 from .database.DatabaseConfig import DatabaseConfig
 import os
 import secrets
-from flask_bcrypt import Bcrypt
 
 # This function is called just below library imports to load all app configuration
 load_dotenv()
@@ -18,7 +17,22 @@ api = Blueprint('api', __name__, url_prefix=API_PREFIX)
 
 # Just allows requests from frontend management server,
 # By default Flask doesn't allow requests from other hosts
-CORS(app, resources={r"/api/*": {"origins": "http://localhost:5173"}})
+CORS(
+    app,
+    resources={r"/api/*": {"origins": "*"}},
+    methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    supports_credentials=False
+)
+
+@app.before_request
+def log_headers():
+    print(f"{request.method} {request.path} headers: {dict(request.headers)}")
+
+
+@app.after_request
+def add_cors_headers(res):
+    res.headers.add("Access-Control-Allow-Headers", "Content-Type, Authorization")
+    return res
 
 db_config = DatabaseConfig(
     type=os.getenv('DB_CONNECTION'),
@@ -38,6 +52,7 @@ app.config.update(
 
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
+
 
 from .database.models import User, Role, Product, Order
 from . import console

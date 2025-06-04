@@ -1,35 +1,35 @@
 <script setup lang="ts">
-import { onMounted } from 'vue';
-import useApi from '../composables/api';
-import useAuth from '../composables/auth';
+import { onMounted } from 'vue'
+import Api from '../utils/Api'
+import useAuth from '../composables/auth'
 
-const api = useApi();
+const api = Api.access()
 
 
 const tryLogin = async () => 
 {
-  const tryToLogin = useAuth();
-  const response = await tryToLogin("test@demo.com");
-  console.log(response);
-};
+/*   const tryToLogin = useAuth()
+  const response = await tryToLogin("test@demo.com")
+  console.log(response) */
+}
 
 /* TEST (se puede borrar si es necesario) */
 const ping = async () => 
 {
   try {
-    const response = await api.get('/api/ping');
-    console.log(response.data);
+    const response = await api.get('/api/ping')
+    console.log(response.data)
   } catch (error) {
-    console.error('Error ping:', error);
+    console.error('Error ping:', error)
   }
 }
 </script>
 
 <template>
   <div class="background">
-    <div class="mainDashboardGrid">
+    <div class="grid-dashboard">
 
-      <div class="grid-item" style=" grid-area: 1 / 2 / 2 / 3; background: #9EECA0;">
+      <div class="grid-item" style=" grid-area: 1 / 2 / 2 / 3; background: #9EECA0">
         <Button @click="tryLogin">
           Login!
         </Button>
@@ -38,15 +38,15 @@ const ping = async () =>
         </Button>
       </div>
 
-      <div class="grid-item" style=" grid-area: 2 / 2 / 6 / 3; background: #9D8DE0;"> </div>
-      <div class="grid-item" style=" grid-area: 1 / 1 / 4 / 2; background: #9D8DE0;"> </div>
-      <div class="grid-item" style=" grid-area: 4 / 1 / 6 / 2; background: #9EECA0;"> </div>
+      <div class="grid-item" style=" grid-area: 2 / 2 / 6 / 3; background: #9D8DE0"> </div>
+      <div class="grid-item" style=" grid-area: 1 / 1 / 4 / 2; background: #9D8DE0"> </div>
+      <div class="grid-item" style=" grid-area: 4 / 1 / 6 / 2; background: #9EECA0"> </div>
     </div>
   </div>
 </template>
 
 <style scoped>
-.mainDashboardGrid {
+.grid-dashboard {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   grid-template-rows: repeat(5, 1fr);

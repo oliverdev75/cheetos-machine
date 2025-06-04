@@ -13,7 +13,7 @@ import useAuthStore from '../store/auth'
 const requireAuth = (_to: any, _from: any, next: any) => {
     const authStore = useAuthStore()
 
-    const token = authStore.authToken
+    const token = authStore.token
     if (!token) {
         next({ name: 'login' })
     } else {
@@ -24,11 +24,15 @@ const requireAuth = (_to: any, _from: any, next: any) => {
 const requireAdmin = (to: any, _from: any, next: any) => {
     const authStore = useAuthStore()
 
-    const token = authStore.authToken
+    const token = authStore.token
     if (!token) {
         next({ name: 'login' })
     } else {
         const user = authStore.user
+        if (!user) {
+            next({ name: 'login' })
+        }
+        
         if (user.roles && user.roles.includes('admin')) {
             next()
         } else {
@@ -40,9 +44,10 @@ const requireAdmin = (to: any, _from: any, next: any) => {
 const requireGuest = (_to: any, _from: any, next: any) => {
     const authStore = useAuthStore()
 
-    const token = authStore.authToken
+    const token = authStore.token
+    console.log('Token: ', token)
     if (token) {
-        next('/')
+        next({ name: 'menu' })
     } else {
         next()
     }
@@ -63,21 +68,21 @@ export default [
 
         name: 'login',
         path: '/login',
-        beforeEnter: requireGuest,
         component: Login,
+        beforeEnter: requireGuest,
     },
     {
 
         name: 'register',
         path: '/register',
-        beforeEnter: requireGuest,
         component: Register,
+        beforeEnter: requireGuest,
     },
     {
         name: 'account',
         path: '/account',
-        beforeEnter: requireAuth,
         component: Account,
+        beforeEnter: requireAuth,
     },
     {
         name: 'admin',
@@ -89,14 +94,13 @@ export default [
 
         name: 'menu',
         path: '/carta',
-        beforeEnter: requireAuth,
         component: Menu,
     },
     {
         name: 'orders',
         path: '/orders',
-        beforeEnter: requireAuth,
         component: Orders,
+        beforeEnter: requireAuth,
 
     }
 ]

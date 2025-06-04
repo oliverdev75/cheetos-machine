@@ -1,10 +1,10 @@
 from datetime import datetime
 from app import api, db
-from app.database.models import User
+from app.database.models import User, Role
 from flask import jsonify, request
 import bcrypt
 
-@api.route("/user")
+@api.route("/users")
 def get_users():
     email = request.get_json(force=True)['email']
     if email:
@@ -17,12 +17,12 @@ def get_users():
         return jsonify([u.to_dict() for u in User.query.all()])
 
 
-@api.route("/user/<int:id>")
+@api.route("/users/<int:id>")
 def get_user(id):
     return jsonify(User.query.get_or_404(id).to_dict())
 
 
-@api.route("/user", methods=['POST'])
+@api.route("/users", methods=['POST'])
 def create_user():
     data = request.get_json(force=True)
 
@@ -40,13 +40,14 @@ def create_user():
         password=hashed_password
     )
 
+    user.roles.append(Role.query.filter_by(name = 'client').first())
     db.session.add(user)
     db.session.commit()
 
     return jsonify({'success': True, 'data': user.to_dict()}), 201
 
 
-@api.route("/user/<int:id>", methods=["PUT"])
+@api.route("/users/<int:id>", methods=["PUT"])
 def update_user(id):
     user = User.query.get_or_404(id)
     data = request.get_json(force=True)
@@ -58,7 +59,7 @@ def update_user(id):
     return jsonify(user.to_dict())
 
 
-@api.route("/user/<int:id>", methods=["DELETE"])
+@api.route("/users/<int:id>", methods=["DELETE"])
 def delete_user(id):
     user = User.query.get_or_404(id)
     db.session.delete(user)

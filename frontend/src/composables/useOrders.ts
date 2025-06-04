@@ -1,8 +1,8 @@
 // src/composables/useOrders.ts
-import useApi from './api'
+import Api from '../utils/Api'
 
 export default function useOrders() {
-    const api = useApi()
+    const api = Api.access()
 
     const getOrders = async () => {
         try {

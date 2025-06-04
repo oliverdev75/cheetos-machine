@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import { ref } from "vue"
-import useApi from "../composables/api"
+import Api from "../utils/Api"
 import Button from "../components/Button.vue"
 import InputText from "../components/InputText.vue"
 import { useRouter } from "vue-router"
 
 const router = useRouter()
-const api = useApi()
+const api = Api.access()
 
 const name = ref("")
 const email = ref("")
@@ -54,7 +54,7 @@ const register = () => {
         <span class="text-white flex justify-center gap-2">
           Already have an account?
           <router-link :to="{ name: 'login' }" class="text-white text-center">
-            <a class="text-blue-500 hover:text-blue-700">
+            <a class="text-[#052F5F] hover:text-blue-700">
               Log in here
             </a>
           </router-link>

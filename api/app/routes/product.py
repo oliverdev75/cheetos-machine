@@ -2,10 +2,10 @@ from datetime import datetime
 from flask import jsonify, request
 from app import api, db
 from app.database.models import Product
-from app.constants import API_PREFIX
+from app.decorators import auth
 
-#Personalizadas
 @api.route("/buy/<id>", methods=["GET"])
+@auth
 def buy_product(id = None):
     if not id:
         return jsonify("id param is required"), 400
@@ -16,7 +16,9 @@ def buy_product(id = None):
 
 
 @api.route('/products', methods=['GET'])
+@auth
 def get_products():
+    print("authed!!!!")
     return jsonify([p.to_dict() for p in Product.query.all()])
 
 # GET - Get product by ID

@@ -36,9 +36,9 @@
 
 <script setup>
 import { ref, onMounted } from 'vue'
-import useApi from '../../composables/api'
+import Api from '../../utils/Api'
 
-const api = useApi()
+const api = Api.access()
 
 const users = ref([])
 const form = ref({ name: '', email: '', password: '' })

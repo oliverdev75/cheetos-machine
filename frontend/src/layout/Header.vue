@@ -1,41 +1,110 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 import useAuthStore from '../store/auth'
-import MatIcon from '../components/MatIcon.vue';
+import MatIcon from '../components/MatIcon.vue'
+import Button from '../components/Button.vue'
+import { useRouter } from 'vue-router'
+import useAuth from '../composables/auth'
 
+const router = useRouter()
 const authStore = useAuthStore()
+const menuVisible = ref(false)
+const { logout } = useAuth()
+
+const navigate = (to: string | object) => {
+  menuVisible.value = false
+  router.push(to)
+}
+
+const pages = [
+  { name: 'Home', path: '/' },
+  { name: 'Carta', path: '/carta' },
+  { name: 'About', path: '/nosotros' },
+]
+
 </script>
 
 <template>
-  <div class="bg-[#E57600] w-full h-20 py-5 px-2 flex justify-center">
-    <div class="w-[90%] flex items-center justify-between mx-15">
+  <div class="navmenu-overlay"></div>
+  <div class="bg-[#E57600] w-full py-5 px-2 flex justify-center">
+    <div class="w-[90%] flex items-center justify-between">
         <div>
-          <router-link to=""><img src="./../../public/images/logo.svg" alt="" class="w-75 fixed"></router-link>
-        </div>
-        <nav class="text-white flex gap-5 text-2xl font-bold">
-          <router-link :to="{ name: 'home' }">Home</router-link>
-          <router-link :to="{ name: 'menu' }">Pedir</router-link>
-          <router-link :to="{ name: 'about' }">Sobre nosotros</router-link>
-        </nav>
-        <div v-if="authStore.user" class="flex items-center text-2xl font-bold text-white">
-          <p>{{ authStore.user.cash }} €</p>
-          <router-link :to="{ name: 'account' }">
-            <MatIcon icon="account_circle" class="ml-4 mr-2 text-3xl" />
-            <span>Account</span>
+          <router-link to="/">
+            <img src="/images/short_logo.png" alt="Gazpacho little logo" class="block lg:hidden w-12">
+            <img src="/images/logo.svg" alt="Gazpacho big logo" class="hidden lg:block w-35">
           </router-link>
         </div>
-        <div v-else class="flex gap-3">
-          <router-link :to="{ name: 'login' }">
-            <div class="flex items-center text-2xl text-white">
-              <span class="ml-2 hover:underline">Login</span>
-            </div>
-          </router-link>
-          <router-link :to="{ name: 'register' }">
-            <div class="flex items-center text-2xl text-white">
-              <span class="ml-2 hover:underline">Register</span>
-            </div>
-          </router-link>
+        <Button class="static lg:hidden" icon="menu" text icon-class="text-white !text-3xl" @click="menuVisible = !menuVisible" />
+        <div class="hidden lg:flex w-[70%] justify-end items-center gap-4">
+          <nav class="text-white flex gap-5 text-2xl font-bold">
+            <router-link :to="{ name: 'home' }" class="hover:underline text-2xl">Home</router-link>
+            <router-link :to="{ name: 'menu' }" class="hover:underline text-2xl">Pedir</router-link>
+            <router-link :to="{ name: 'about' }" class="hover:underline text-2xl">Sobre nosotros</router-link>
+            <template v-if="authStore.user">
+              <p>{{ authStore.user.cash }} €</p>
+              <router-link :to="{ name: 'account' }">
+                <mat-icon class="ml-4 mr-2 text-2xl">account_circle</mat-icon>
+                <span>Account</span>
+              </router-link>
+            </template>
+            <template v-else>
+              <router-link :to="{ name: 'login' }" class="hover:underline text-2xl text-white">
+                Login
+              </router-link>
+              <router-link :to="{ name: 'register' }" class="hover:underline text-2xl text-white">
+                Register
+              </router-link>
+            </template>
+          </nav>
+        </div>
+        <div class="
+          flex lg:hidden absolute top-0 right-[-250px]
+          h-screen w-[250px] px-10 py-5 flex-col gap-3
+          bg-white text-gazpacho shadow-2xl transition-all duration-300 ease-in-out"
+          :class="{ 'menu-visible': menuVisible }"
+        >
+          <Button icon="close" text icon-class="text-gazpacho !text-3xl" @click="menuVisible = false" />
+          <nav class="flex flex-col gap-5 text-2xl font-bold">
+            <a v-for="page in pages" :key="page.name" @click="navigate(page.path)" class="cursor-pointer hover:underline">
+              {{ page.name }}
+            </a>
+            <template v-if="authStore.token">
+              <p>{{ authStore.user?.cash }} €</p>
+              <a @click="navigate({ name: 'account' })" class="flex items-center">
+                <MatIcon icon="account_circle" class="ml-4 mr-2 text-3xl" />
+                <span>Account</span>
+              </a>
+              <Button text icon="logout" @click="logout">Logout</Button>
+            </template>
+            <template v-else>
+              <a @click="navigate({ name: 'login' })" class="flex items-center hover:underline hover:cursor-pointer">
+                Login
+              </a>
+              <a @click="navigate({ name: 'register' })" class="flex items-center hover:underline hover:cursor-pointer">
+                Register
+              </a>
+            </template>
+          </nav>
         </div>
     </div>
   </div>
 </template>
+
+<style scoped>
+
+.menu-visible {
+  transform: translateX(-250px);
+}
+
+/* .navmenu-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: -1;
+  transition: all .3s ease-in-out;
+} */
+
+</style>

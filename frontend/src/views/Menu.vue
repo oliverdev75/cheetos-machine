@@ -1,11 +1,13 @@
 <script setup>
 import { ref, onMounted } from 'vue'
-import useApi from '../composables/api'
+import Api from '../utils/Api'
 import Button from '../components/Button.vue'
 import MatIcon from '../components/MatIcon.vue'
+import Product from '../components/Product.vue'
 import { Toast, useToast } from 'primevue'
+import useAuthStore from '../store/auth'
 
-const api = useApi()
+const api = Api.access()
 const products = ref([])
 const toast = useToast()
 const authStore = useAuthStore()
@@ -50,29 +52,12 @@ const buyProduct = async product => {
   </div>
   <div class="w-full py-10 bg-gazpacho">
     <div v-if="products.length" class="m-15 grid grid-cols-1 sm:grid-cols-3 gap-6">
-      <article
+      <Product
         v-for="product in products"
+        v-bind="product"
         :key="product.id"
-        class="flex flex-col"
-      >
-        <img
-            :src="product.image"
-            alt="Imagen del product"
-            class="m-auto h-60 object-cover"
-        />
-        <div class="w-full flex flex-col gap-3 items-center">
-          <strong class="text-white text-center text-4xl text-shadow-lg">{{ product.name }}</strong>
-          <Button
-            icon="shopping_cart"
-            white
-            class="px-5 py-3 text-3xl gap-7"
-            icon-class="!text-4xl"
-            @click="buyProduct(product)"
-          >
-            {{ product.price.toFixed(2).replace('.', ',') }}€
-          </Button>
-        </div>
-      </article>
+        :buy-callback="buyProduct"
+      />
     </div>
     <div v-else class="h-full flex flex-col gap-2 items-center">
       <mat-icon class="animate-spin !text-3xl">progress_activity</mat-icon>
