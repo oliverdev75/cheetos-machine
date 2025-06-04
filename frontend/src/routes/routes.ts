@@ -3,6 +3,7 @@ import About from '../views/About.vue'
 import Dashboard from '../views/Dashboard.vue'
 import Admin from '../views/Admin/Admin.vue'
 import Menu from '../views/Menu.vue'
+import BuyProduct from '../views/BuyProduct.vue'
 import Login from '../views/Login.vue'
 import Register from '../views/Register.vue'
 import Account from '../views/Account.vue'
@@ -91,10 +92,15 @@ export default [
         component: Admin,
     },
     {
-
         name: 'menu',
         path: '/carta',
         component: Menu,
+    },
+    {
+        name: 'buy-product',
+        path: '/buy/:id',
+        beforeEnter: requireAuth,
+        component: BuyProduct,
     },
     {
         name: 'orders',

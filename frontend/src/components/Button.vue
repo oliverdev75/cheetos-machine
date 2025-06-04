@@ -30,20 +30,20 @@ const primary = computed(() => !white && !text)
 const secondary = computed(() => (slots.default || label) && white && !text)
 
 const renderedClass = reactive({
-    'text-white bg-gazpacho hover:bg-btn-hover': primary,
-    'bg-white text-gazpacho': secondary,
+    'px-5 border-5 border-[#FF8F11] text-white bg-gazpacho hover:bg-btn-hover': primary,
+    'px-5 bg-white text-gazpacho': secondary,
     'w-fit': computed(() => !fluid),
     'px-5': computed(() => fluid && !text && !icon && !slots.default && !label),
     'w-full justify-center': computed(() => fluid),
     'py-1 px-2': computed(() => icon && !text && !slots.default && !label),
-    'px-5 py-1.5': computed(() => !icon && !text && (slots.default || label)),
+    'py-4': computed(() => !icon && !text && (slots.default || label)),
 })
 
 </script>
 
 <template>
     <button
-        class="flex items-center gap-3 rounded-md hover:cursor-pointer"
+        class="flex items-center gap-3 rounded-[20px] hover:cursor-pointer"
         :class="renderedClass"
         v-bind="$attrs"
     >

@@ -4,12 +4,17 @@ import Api from '../utils/Api'
 
 const useAuthStore = defineStore('auth', () => {
     const token = ref<string | null>(localStorage.getItem('authToken'))
-    const user = ref()
+    const user = ref(JSON.parse(localStorage.getItem('user') ?? '{}'))
 
     const setToken = (authToken: string) => {
         token.value = authToken
         localStorage.setItem('authToken', authToken)
         Api.access().setAuthToken(authToken)
+    }
+
+    const setUser = (authedUser: object) => {
+        user.value = authedUser
+        localStorage.setItem('user', JSON.stringify(user.value))
     }
 
     const removeToken = () => {
@@ -22,6 +27,7 @@ const useAuthStore = defineStore('auth', () => {
         token,
         user,
         setToken,
+        setUser,
         removeToken
     }
 })

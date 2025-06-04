@@ -12,8 +12,9 @@ export default function useAuth() {
             .then((data: any) => {
                 // Guarda el token
                 authStore.setToken(data.token)
-                authStore.user = data.user
-
+                console.log(data.user)
+                authStore.setUser(data.user)
+ç
                 router.push({ name: 'menu' })
             })
     }

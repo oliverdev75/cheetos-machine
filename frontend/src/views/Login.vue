@@ -9,8 +9,8 @@ const auth = useAuth()
 const email = ref("")
 const password = ref("")
 
-const login = () => {
-  auth.login(email.value, password.value)
+const login = async () => {
+  await auth.login(email.value, password.value)
 }
 
 </script>

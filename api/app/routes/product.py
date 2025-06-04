@@ -1,5 +1,5 @@
 from datetime import datetime
-from flask import jsonify, request
+from flask import jsonify, request, send_file
 from app import api, db
 from app.database.models import Product
 from app.decorators import auth
@@ -21,11 +21,17 @@ def get_products():
     print("authed!!!!")
     return jsonify([p.to_dict() for p in Product.query.all()])
 
+
 # GET - Get product by ID
 @api.route('/products/<int:id>', methods=['GET'])
 def get_product(id):
     return jsonify(Product.query.get_or_404(id).to_dict())
 
+
+@api.route('/products/image/<int:id>')
+def get_product_image(id):
+    product = Product.query.filter_by(id = id).first_or_404()
+    return send_file(f"images/{product.image}.png", mimetype='image/jpeg')
 
 # POST - Create product
 @api.route('/products', methods=['POST'])

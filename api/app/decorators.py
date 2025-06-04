@@ -18,7 +18,7 @@ def auth(f):
             return jsonify({ 'success': False, 'message': 'Wrong email' }), 401
         except jwt.ExpiredSignatureError:
             return jsonify({ 'success': False, 'message': 'Token expired' }), 401
-        except (jwt.InvalidTokenError, Exception) as ex:
+        except (jwt.InvalidTokenError) as ex:
             return jsonify({ 'success': False, 'message': 'Invalid token', 'ex': ex.args }), 401
     wrapper.__name__ = f.__name__
     return wrapper

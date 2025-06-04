@@ -21,27 +21,6 @@ onMounted(async () => {
       toast.add({ summary: "Unexpected error", detail: "There was an unexpected error", severity: 'error' })
     })
 })
-
-const buyProduct = async product => {
-  api.post('/orders', { product: product, user_id: authStore.user.id })
-    .then(data => {
-      toast.add({
-        summary: "Info",
-        detail: "Serving product...",
-        severity: 'info',
-        group: 'bl',
-        life: 3000
-      })
-    })
-    .catch(error => {
-      toast.add({
-        summary: "Error",
-        detail: "There was an error doing de order",
-        group: 'bl',
-        severity: 'error'
-      })
-    })
-}
 </script>
 
 <template>
@@ -51,12 +30,11 @@ const buyProduct = async product => {
     <h3 class="text-center text-2xl">Selecciona un producto para poder selecciona un producto, Selecciona un producto para poder selecciona</h3>
   </div>
   <div class="w-full py-10 bg-gazpacho">
-    <div v-if="products.length" class="m-15 grid grid-cols-1 sm:grid-cols-3 gap-6">
+    <div v-if="products.length" class="m-15 grid grid-cols-1 sm:grid-cols-3 gap-10">
       <Product
         v-for="product in products"
         v-bind="product"
         :key="product.id"
-        :buy-callback="buyProduct"
       />
     </div>
     <div v-else class="h-full flex flex-col gap-2 items-center">

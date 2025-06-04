@@ -1,8 +1,10 @@
 from datetime import datetime
 from flask import jsonify, request
-from app import api, db
-from app.database.models import Order, Product
+from app import api, db, app
+from app.database.models import Order, Product, User
+from app.utils import get_auth_token
 from sqlalchemy import desc
+import jwt
 
 #CRD
 @api.route('/orders', methods=['GET'])
@@ -22,20 +24,23 @@ def create_order():
     if not data:
         return jsonify({'success': False, 'message': 'Invalid or missing JSON'}), 400
 
-    if not all(k in data for k in ('user_id', 'product')):
+    if 'product' not in data:
         return jsonify({'success': False, 'message': 'Missing required fields'}), 400
-
+    
+    auth_data = jwt.decode(get_auth_token(), app.secret_key, ["HS256", "HMAC"])
+    user = User.query.filter_by(email = auth_data['sub']).first()
+    user.tokens = user.tokens - data['product']['tokens']
+    db.session.commit()
     order = Order(
-        user_id=data['user_id'],
-        product_id=data['product']['id'],
-        price=data['product']['price'],
+        user_id=user.id,
+        tokens=data['product']['tokens'],
     )
 
-    order.products.add(Product.query.get_or_404(data['product']['id']))
+    order.products.append(Product.query.get_or_404(data['product']['id']))
     db.session.add(order)
     db.session.commit()
 
-    return jsonify(order.to_dict()), 201
+    return jsonify([order.to_dict(), user.to_dict()]), 201
 
 
 @api.route('/orders/<int:id>', methods=['DELETE'])
@@ -46,16 +51,12 @@ def delete_order(id):
     return jsonify({'message': 'Order deleted'})
 
 
-@api.route('/order/check', methods=['GET'])
+@api.route('/orders/check', methods=['GET'])
 def order_check():
-    user_id = request.args.get('user_id', type=int)
-
-    if not user_id:
-        return jsonify({'success': False, 'message': 'user_id parameter is required'}), 400
 
     last_order = (
         db.session.query(Order)
-        .filter(Order.user_id == user_id, Order.delivered_at == None)
+        .filter(Order.delivered_at == None)
         .order_by(desc(Order.created_at))
         .first()
     )

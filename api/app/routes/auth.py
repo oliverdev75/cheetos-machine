@@ -22,6 +22,7 @@ def login():
         return jsonify({
             'success': True,
             'token': token,
+            'user': user.to_dict()
         })
     return jsonify({
         'success': False,

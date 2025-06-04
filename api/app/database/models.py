@@ -23,7 +23,7 @@ class User(db.Model):
     name = db.Column(String(255), nullable=False)
     email = db.Column(String(255), unique=True)
     password = db.Column(String(255), nullable=False)
-    cash = db.Column(Float(precision=2), default=0.0, nullable=False)
+    tokens = db.Column(Float(precision=2), default=0.0, nullable=False)
     created_at = db.Column(DateTime(), default=datetime.now(), nullable=False)
     updated_at = db.Column(DateTime(), default=None)
     roles = db.relationship("Role", secondary="user_role", backref="users")
@@ -34,6 +34,7 @@ class User(db.Model):
             'id': self.id,
             'name': self.name,
             'email': self.email,
+            'tokens': self.tokens,
             'roles': self.roles,
             'orders': [order.to_dict() for order in self.orders],
             'created_at': self.created_at,
@@ -51,7 +52,7 @@ class Product(db.Model):
 
     id = db.Column(Integer(), primary_key=True)
     name = db.Column(String(255), nullable=False)
-    price = db.Column(Float(2), nullable=False)
+    tokens = db.Column(Integer(), nullable=False)
     image = db.Column(String(255), nullable=False)
     created_at = db.Column(DateTime(), default=datetime.now(), nullable=False)
     updated_at = db.Column(DateTime(), default=None)
@@ -62,11 +63,8 @@ class Product(db.Model):
         return {
             'id': self.id,
             'name': self.name,
-
-            'price': self.price,
+            'tokens': self.tokens,
             'image': self.image,
-            'orders': self.orders,
-
             'created_at': self.created_at,
             'updated_at': self.updated_at
         }
@@ -80,19 +78,17 @@ class Order(db.Model):
 
     id = db.Column(Integer(), primary_key=True)
     user_id = db.Column(Integer(), ForeignKey('users.id'), nullable=False)
-    price = db.Column(Float(2), nullable=False)
+    tokens = db.Column(Integer(), nullable=False)
     delivered_at = db.Column(DateTime(), default=None)
-    
     created_at = db.Column(DateTime(), default=datetime.now, nullable=False)
     updated_at = db.Column(DateTime(), default=None)
-
     products = db.relationship("Product", secondary="order_product", back_populates="orders")
 
     def to_dict(self):
         return {
             'id': self.id,
             'user_id': self.user_id,
-            'price': self.price,
+            'tokens': self.tokens,
             'delivered_at': self.delivered_at,
             'created_at': self.created_at,
             'updated_at': self.updated_at,

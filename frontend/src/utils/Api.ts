@@ -24,7 +24,7 @@ class Api {
         this.token = token
     }
 
-    createPromise(req: () => Promise<any>): Promise<any> {
+    private createPromise(req: () => Promise<any>): Promise<any> {
         console.log("Auth: ", localStorage.getItem('authToken'))
         return new Promise<any>(async (resolve, reject) => {
             try {
@@ -36,7 +36,7 @@ class Api {
         })
     }
 
-    makeParams(params: object | undefined): string {
+    private makeParams(params: object | undefined): string {
         let urlParams = params ? "?" : ""
         const paramNames = params ? Object.keys(params) : []
         const paramValues = params ? Object.values(params) : []
@@ -49,7 +49,7 @@ class Api {
         return urlParams.substring(0, urlParams.length)
     }
 
-    authorizeRequest(): object {
+    private authorizeRequest(): object {
         const token = localStorage.getItem('authToken')
         return token ? {
             headers: {
@@ -66,6 +66,7 @@ class Api {
 
     async post(url: string, data: any, params?: object): Promise<any> {
         const config = this.authorizeRequest()
+        console.log(url)
         return this.createPromise(() => axios.post(API_URL + url + this.makeParams(params), data, config))
     }
 
